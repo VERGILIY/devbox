@@ -1,0 +1,18 @@
+- name: Install PostgreSQL
+  become: yes
+  dnf: name={{ item }} state=present
+  with_items:
+    - postgresql-server
+    - postgresql-contrib
+    - postgresql-devel
+    - python-psycopg2
+
+- name: Init database
+  become: yes
+  command: postgresql-setup --initdb --unit postgresql creates=/var/lib/pgsql/data/postgresql.conf
+
+- name: Copy pg_hba.conf file
+  copy: src=pg_hba.conf dest=/var/lib/pgsql/data
+
+- name: Start PostgreSQL and enable at boot
+  service: name=postgresql enabled=yes state=restarted

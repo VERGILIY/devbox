@@ -1,0 +1,2 @@
+- name: Create DB user
+  postgresql_user: name=vagrant password=vagrant role_attr_flags=CREATEDB,SUPERUSER,LOGIN

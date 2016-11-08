@@ -1,0 +1,2 @@
+- name: Make Ansible work with DNF
+  raw: dnf install -y python2 python2-dnf libselinux-python

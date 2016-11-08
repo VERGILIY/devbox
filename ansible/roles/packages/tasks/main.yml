@@ -1,0 +1,25 @@
+- name: Upgrade all packages
+  dnf: name=* state=latest
+
+- name: Install dev dependencies
+  dnf: name={{ item }} state=latest
+  with_items:
+    - git
+    - gcc
+    - bzip2
+    - openssl-devel
+    - libyaml-devel
+    - libffi-devel
+    - readline-devel
+    - zlib-devel
+    - gdbm-devel
+    - ncurses-devel
+
+- name: Install useful utilities
+  dnf: name={{ item }} state=latest
+  with_items:
+    - htop
+    - wget
+    - vim
+    - tmux
+    - curl

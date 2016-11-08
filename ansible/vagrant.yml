@@ -1,0 +1,61 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - ansible
+  tags:
+    - ansible
+    - packages
+
+- hosts: all
+  become: true
+  roles:
+    - packages
+  tags:
+    - packages
+    - ansible
+
+- hosts: all
+  gather_facts: true # https://github.com/zzet/ansible-rbenv-role/issues/37
+  vars:
+    rbenv:
+      env: user
+      version: v1.0.0
+      ruby_version: 2.3.1
+    rbenv_owner: vagrant
+    rbenv_group: vagrant
+    rbenv_repo: "https://github.com/rbenv/rbenv.git"
+    rbenv_plugins:
+      - { name: "rbenv-vars",
+          repo: "https://github.com/rbenv/rbenv-vars.git",
+          version: "v1.2.0" }
+      - { name: "ruby-build",
+          repo: "https://github.com/rbenv/ruby-build.git",
+          version: "v20160913" }
+  roles:
+    - role: ansible-rbenv-role
+      rbenv_users:
+        - vagrant
+
+- hosts: all
+  become: true
+  roles:
+    - postgres
+  tags:
+    - postgres
+    - database
+    - packages
+
+- hosts: all
+  roles:
+    - database
+  tags:
+    - database
+    - postgres
+
+- hosts: all
+  roles:
+    - gems
+  tags:
+    - ruby
+    - gems
