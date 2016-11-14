@@ -1,0 +1,2 @@
+- name: Copy tmux.conf file
+  copy: src=tmux.conf dest=/home/vagrant/.tmux.conf
